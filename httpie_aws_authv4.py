@@ -40,9 +40,9 @@ class AWSAuth(object):
                 _, _, host, _, _, _, _ = parse_url(r.url)
                 r.headers['Host'] = host
             if self.domain is not None:
-                aws_params = self._parse_url(self.domain)
+                aws_params = {"region": "us-west-2", "service": "svs"}
             else:
-                aws_params = self._parse_url(host)
+                aws_params = {"region": "us-west-2", "service": "svs"}
         except ValueError:
             print("ERROR: Could not parse neccessary information from URL.")
             raise
