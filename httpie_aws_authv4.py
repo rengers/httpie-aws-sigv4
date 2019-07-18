@@ -40,15 +40,13 @@ class AWSAuth(object):
                 _, _, host, _, _, _, _ = parse_url(r.url)
                 r.headers['Host'] = host
             if self.domain is not None:
-                aws_params = {"region": "us-west-2", "service": "svs"}
+                aws_params = self._parse_url(self.domain)
             else:
-                aws_params = {"region": "us-west-2", "service": "svs"}
+                aws_params = self._parse_url(host)
         except ValueError:
-            print("ERROR: Could not parse neccessary information from URL.")
-            raise
+            aws_params = {"region": "us-west-2", "service": "svs"}
         except Exception as error:
-            print("Error parsing URL: %s" % error)
-            raise
+            aws_params = {"region": "us-west-2", "service": "svs"}
 
         aws_request = AWSRequestsAuth(aws_access_key=self.aws_access_key,
                                       aws_secret_access_key=self.aws_secret_access_key,
